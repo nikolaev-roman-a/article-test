@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:  # Сервис вашего приложения
+    build: .  # Собирает образ из Dockerfile в текущей директории
+    volumes:
+      - ./database:/app/database  # Монтирует папку с базой SQLite
+    environment:
+      - DATABASE_URL=jdbc:sqlite:/app/database/articles_dev.db
+      - ELSEVIER_APIKEY=833c838c010559b11fa13f6dc28c49c9
+      # Переменные окружения
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"  # Пробрасывает порт приложения наружу
