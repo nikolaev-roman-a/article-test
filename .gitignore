@@ -20,3 +20,5 @@ modules/
 .lsp/.cache/
 
 .env
+.portal
+.clj-kondo/
