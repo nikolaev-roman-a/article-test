@@ -43,8 +43,9 @@
     {:get #'health/healthcheck!}]
 
    ["/source/find"
-    {:post       {:handler (partial #'source/find-articles context)
-                  :parameters {:query {:word string?}}}}]
+    {:parameters {:query [:map [:word [:or vector? string?]]]}
+     :get  {:handler    (partial #'source/find-articles context)}
+     :post {:handler    (partial #'source/find-articles context)}}]
    ["/articles"
     ["/"
      {:get {:handler    #'articles/search

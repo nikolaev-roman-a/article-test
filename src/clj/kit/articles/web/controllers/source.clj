@@ -7,6 +7,11 @@
 
 (defn find-articles
   [context {:keys [params] :as _req}]
-  (let [result (->> {:words (some-> (:word params) (str/split #","))}
+  (let [words  (cond (string? (:word params))
+                     (some-> (:word params) (str/split #","))
+
+                     (vector? (:word params))
+                     (:word params))
+        result (->> {:words words}
                     (article-source/search-and-save (:source context)))]
     (http-response/ok {:result result})))
