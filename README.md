@@ -8,7 +8,7 @@ steps:
 2.  create .env by .env.template or use default envs
 
 3.  ```make
-    make docker-up
+    make docker-build
     ```
 
 4.  open localhost:3000

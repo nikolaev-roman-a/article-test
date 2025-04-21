@@ -19,5 +19,8 @@ test:
 uberjar:
 	clj -T:build all
 
-docker-up:
+docker-build:
 	docker-compose up --build
+
+docker-up:
+	docker-compose up
