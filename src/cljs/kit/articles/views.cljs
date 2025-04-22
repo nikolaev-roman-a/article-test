@@ -44,19 +44,21 @@
 ;; view
 
 (defn article-page []
-  (let [item @(rf/subscribe [:search/results :article])]
+  (let [item @(rf/subscribe [:search/results :article])
+        ref (str "https://doi.org/" (:doi item))]
     [:div.h-screen.flex.flex-col
      [:div.mx-auto.p-6
       [:h1.text-3xl.font-bold.text-gray-900.mb-8 "Статья: " (:title item)]
       [:div
        [:span.mt-1.text-gray-600 "Автор: " (:author item)]
-       [:span.mt-1.text-gray-600.ml-2 "Дата публикации: " (:date item)]]]
+       [:span.mt-1.text-gray-600.ml-2 "Дата публикации: " (:date item)]
+       [:br]
+       [:span.mt-1.text-gray-600 "Ссылка: " [:a {:href ref} [:p.underline ref]]]]]
      [:div.flex-1.relative.overflow-hidden
       [:iframe.w-full.h-full.border-0.rounded-lg.shadow-lg
-       {:style           {:flex "1 1 auto"}
-        :src             (str "https://doi.org/" (:doi item))
-        :allowFullScreen true
-        :allow           "accelerometer; encrypted-media; gyroscope"}]]]))
+       {:allowFullScreen true
+        :style           {:flex "1 1 auto"}
+        :src             ref}]]]))
 
 (defmethod routes/panels :item-panel [] [article-page])
 

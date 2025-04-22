@@ -24,3 +24,6 @@ docker-build:
 
 docker-up:
 	docker-compose up
+
+ui:
+	npx shadow-cljs watch app

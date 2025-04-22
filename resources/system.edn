@@ -58,8 +58,8 @@
  :http.client/hato    {}
 
  :elsevier/api        {:http/client #ig/ref :http.client/hato
-                       :apikey      #or [#env ELSEVIER_APIKEY nil]
-                       :search-host "https://api.elsevier.com/content/search/sciencedirect"}
+                       :apikey      #or [#env ELSEVIER_APIKEY "833c838c010559b11fa13f6dc28c49c9"]
+                       :apiurl      #or [#env ELSEVIER_API_URL "https://api.elsevier.com/content/search/scopus"]}
 
  :article/source      {:api      #ig/ref :elsevier/api
                        :query-fn #ig/ref :db.sql/query-fn}}

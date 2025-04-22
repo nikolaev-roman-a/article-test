@@ -1,10 +1,12 @@
 (ns kit.articles.web.handler
   (:require
-    [kit.articles.web.middleware.core :as middleware]
-    [integrant.core :as ig]
-    [ring.util.http-response :as http-response]
-    [reitit.ring :as ring]
-    [reitit.swagger-ui :as swagger-ui]))
+   [kit.articles.web.middleware.core :as middleware]
+   [integrant.core :as ig]
+   [ring.util.http-response :as http-response]
+   [reitit.ring :as ring]
+   [reitit.swagger-ui :as swagger-ui]
+
+   [kit.articles.web.routes.pages :as pages]))
 
 (defmethod ig/init-key :handler/ring
   [_ {:keys [router api-path] :as opts}]
@@ -19,15 +21,13 @@
       (swagger-ui/create-swagger-ui-handler {:path api-path
                                              :url  (str api-path "/swagger.json")}))
     (ring/create-default-handler
-     {:not-found
-      (constantly (-> (http-response/resource-response "html/home.html")
-                      (http-response/content-type "text/html")))
-      :method-not-allowed
-      (constantly (-> {:status 405, :body "Not allowed"}
-                      (http-response/content-type "text/plain")))
-      :not-acceptable
-      (constantly (-> {:status 406, :body "Not acceptable"}
-                      (http-response/content-type "text/plain")))}))
+     {:not-found          pages/home
+      :method-not-allowed (constantly (-> {:status 405
+                                           :body   "Not allowed"}
+                                          (http-response/content-type "text/plain")))
+      :not-acceptable     (constantly (-> {:status 406
+                                           :body   "Not acceptable"}
+                                          (http-response/content-type "text/plain")))}))
    {:middleware [(middleware/wrap-base opts)]}))
 
 (defmethod ig/init-key :router/routes
